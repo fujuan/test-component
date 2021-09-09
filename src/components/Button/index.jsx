@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './index.css';
 
+
 /**
  * Primary UI component for user interaction
  */
-export const Index = ({ primary, backgroundColor, size, label, radius, ...props }) => {
+const Index = ({ primary, backgroundColor, size, label, radius, ...props }) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
     <button
@@ -48,3 +49,4 @@ Index.defaultProps = {
   size: 'medium',
   onClick: undefined,
 };
+export default Index

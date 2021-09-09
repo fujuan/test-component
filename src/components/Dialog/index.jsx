@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import { createPortal } from 'react-dom'
-import  styles from './index.module.less'
+import Button from '../Button'
+import './index.css'
+
 export default class Dialog extends Component {
     constructor(props){
         super(props)
         this.node = document.createElement('div')
         document.body.appendChild(this.node)
-        this.width = 'auto'
     }
-    componentDidMount() {
-        this.getContentWidth()
-    }
-
     componentWillUnmount(){
         if(this.node){
             document.body.removeChild(this.node)
@@ -19,35 +16,39 @@ export default class Dialog extends Component {
     }
     getContentWidth(){
         const { width } = this.props
+        let currentW = 'auto'
         if(width){
             const type = typeof width
             if(type === 'number'){
                 let maxWidth = window && window.innerWidth
-                this.width = maxWidth && maxWidth > width ? `${width}px`: 'auto'
+                currentW = maxWidth && maxWidth > width ? `${width}px`: 'auto'
             } else {
                 let maxWidth = 100
                 let current = Number.parseInt(width) || 0
-                this.width = maxWidth > current ? width : 'auto'
+                currentW = maxWidth > current ? width : 'auto'
             }
+        } else {
+            currentW = 'auto'
         }
+        return currentW
     }
     render() {
-        const { visible, title, width, children, onOk = () => {} , onCancel = () => {}, footers, ...others } = this.props
+        const { visible, title, width, content, children, type = 'default', onOk = () => {} , onCancel = () => {}, footers, ...others } = this.props
         return createPortal(
-            <div className={styles['dialog-warpper']} style={{ display: visible ? 'block': 'none' }}>
-                <div className={styles['dialog-container']} style={{ width: this.width }}>
-                    { title && <div className={styles['header']}>{title}</div> }
-                    <div className={styles['dialog-close-btn']} onClick={() => onCancel()}>X</div>
-                    <div className={styles['body']}>
-                        {children}
+            <div className={'dialog-warpper'} style={{ display: visible ? 'block': 'none' }}>
+                <div className={'dialog-container'} style={{ width: this.getContentWidth() }}>
+                    { title && <div className={'header'}>{title}</div> }
+                    <div className={'dialog-close-btn'} onClick={() => onCancel()}>X</div>
+                    <div className={'body'}>
+                        { type === 'confirm' ? content: children}
                     </div>
                     { footers === undefined ?
-                        <div className={styles['footer']}>
-                            <button onClick={() => onOk()}>确定</button>
-                            <button onClick={() => onCancel()}>取消</button>
+                        <div className={'footer'}>
+                            <Button label={'确定'} onClick={() => onOk()}></Button>
+                            <Button label={'取消'} onClick={() => onCancel()}></Button>
                         </div>: <div>
                             { footers.length ?
-                                <div className={styles['footer']}>
+                                <div className={'footer'}>
                                     { footers.map((item, index) => {
                                         return <div key={index}>{item}</div>
                                     })}

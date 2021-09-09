@@ -1,6 +1,6 @@
 {
-  "name": "button-juan",
-  "version": "0.1.2",
+  "name": "common-custom-f",
+  "version": "0.1.0",
   "private": false,
   "main": "lib/index.js",
   "dependencies": {
@@ -8,8 +8,15 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "antd": "^4.16.13",
+    "babel-loader": "^8.2.2",
+    "common-custom-f": "^0.1.0",
+    "customize-cra": "^1.0.0",
+    "less": "^4.1.1",
+    "lessc": "^1.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.5",
     "react-scripts": "4.0.3",
     "react-test-renderer": "^17.0.2",
     "web-vitals": "^1.0.1"
@@ -20,7 +27,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "clean": "rimraf lib",
+    "build:css": "lessc src/components/**/**.less lib/**/**.css",
+    "babel": "npm run clean && babel src/components --out-dir lib"
   },
   "eslintConfig": {
     "extends": [

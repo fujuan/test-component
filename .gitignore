@@ -24,3 +24,7 @@ yarn-error.log*
 .idea/
 package-lock.json
 src/__snapshots__/
+storybook-static
+.storybook
+yarn.lock
+lib/
